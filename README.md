@@ -8,7 +8,7 @@ pip install -r requirements.txt
 
 Windows
 ```
-py -m venv venv
+python -m venv venv
 venv¥Scripts¥Activate.ps1
 pip install -r requirements.txt
 ```
