@@ -9,3 +9,4 @@ class TestingConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{base_dir / 'testing.sqlite'}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+    UPLOAD_DIR = f"{base_dir}/images/test/"

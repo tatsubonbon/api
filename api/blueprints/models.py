@@ -57,10 +57,10 @@ def verify_password(username_or_token, password):
     return True
 
 
-class Post:
+class Post(db.Model):
     __tablename__ = "post"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     title = db.Column(db.String)
     text = db.Column(db.String)
@@ -68,13 +68,11 @@ class Post:
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
 
-class Image:
+class Image(db.Model):
     __tablename__ = "image"
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
+    id = db.Column(db.String, primary_key=True)
+    post_id = db.Column(db.String, db.ForeignKey("post.id"))
     image_path = db.Column(db.String)
-    image_name = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)

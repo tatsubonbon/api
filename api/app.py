@@ -25,10 +25,12 @@ def create_app(config_name):
 
 def setup_app(app):
     from api.blueprints.oauth import views as oauth_view
+    from api.blueprints.posts import views as post_view
     from api.blueprints.users import views as user_view
 
     app.register_blueprint(user_view.user_blueprint)
     app.register_blueprint(oauth_view.oauth_blueprint)
+    app.register_blueprint(post_view.post_blueprint)
 
     db.init_app(app)
     with app.app_context():
