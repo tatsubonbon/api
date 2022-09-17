@@ -3,7 +3,7 @@ from api.blueprints.users import user_blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
-from api.db.models.users import User
+from api.db.models.tables import User
 from sqlalchemy.exc import SQLAlchemyError
 
 

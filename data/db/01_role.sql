@@ -1,5 +1,7 @@
+use sample_db;
+
 INSERT INTO
-    `Role` (
+    `roles` (
         `id`,
         `name`,
         `default`,
@@ -15,7 +17,7 @@ VALUES (
     );
 
 INSERT INTO
-    `Role` (
+    `roles` (
         `id`,
         `name`,
         `default`,
@@ -31,7 +33,7 @@ VALUES (
     );
 
 INSERT INTO
-    `Role` (
+    `roles` (
         `id`,
         `name`,
         `default`,

@@ -7,3 +7,11 @@ class StatusCode:
     NOT_FOUND_ERROR = 404
     DUPLICATION_ERROR = 409
     SERVER_ERROR = 500
+
+
+class Permission:
+    FOLLOW = 1
+    COMMENT = 2
+    POST = 4
+    MODERATE = 8
+    ADMIN = 16

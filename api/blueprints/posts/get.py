@@ -1,4 +1,5 @@
 from pathlib import Path
+from re import I
 
 from api.app import oauth
 from api.blueprints.posts import post_blueprint
@@ -6,8 +7,8 @@ from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.columns.postsCol import PostColumns
-from api.db.models.image import Image, ImageSchema
-from api.db.models.posts import Post, PostSchema
+from api.db.models.schemas import ImageSchema, PostSchema
+from api.db.models.tables import Image, Post
 from sqlalchemy.exc import SQLAlchemyError
 
 

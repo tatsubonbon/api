@@ -7,8 +7,7 @@ from api.blueprints.posts import post_blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
-from api.db.models.image import Image
-from api.db.models.posts import Post
+from api.db.models.tables import Image, Post
 from flask import current_app, request
 from sqlalchemy.exc import SQLAlchemyError
 

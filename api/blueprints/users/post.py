@@ -3,8 +3,8 @@ from api.blueprints.users import user_blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
-from api.db.models.users import User
-from flask import jsonify, request, url_for
+from api.db.models.tables import User
+from flask import request
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 
@@ -12,7 +12,6 @@ class RequestSchema(ma.Schema):
     user_name = ma.String(required=True)
     email = ma.Email(required=True)
     password = ma.String(required=True)
-    # role_id = ma.Integer(required=True)
 
 
 @user_blueprint.route("/", methods=["POST"])
@@ -29,8 +28,9 @@ def create_user():
         user_name = payload.get("user_name")
         email = payload.get("email")
         password = payload.get("password")
+        print(user_name)
 
-        user = User(user_name=user_name, email=email)
+        user = User(user_name=user_name, email=email, role_id=1)
         user.hash_password(password)
         db.session.add(user)
         db.session.commit()
