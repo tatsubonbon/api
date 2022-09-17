@@ -1,0 +1,34 @@
+version: '3'
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: "./docker/api/Dockerfile"
+    working_dir: "/src/api"
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./api:/src/api
+    depends_on:
+      - mysql-db
+    links:
+      - mysql-db
+    command: flask run --host 0.0.0.0 --port 5001
+
+  mysql-db:
+    build: ./docker/mysql
+    restart: always
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABSE: sample-db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./data/db:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+volumes:
+  mysql-db:
