@@ -30,6 +30,7 @@ def setup_app(app):
     from api.blueprints.users import delete as delete_user
     from api.blueprints.users import get as get_user
     from api.blueprints.users import post as post_user
+    from api.blueprints.users import put as put_user
 
     app.register_blueprint(get_user.user_blueprint)
     app.register_blueprint(get_oauth.oauth_blueprint)
@@ -37,6 +38,7 @@ def setup_app(app):
     app.register_blueprint(get_posts.post_blueprint)
     app.register_blueprint(post_user.user_blueprint)
     app.register_blueprint(delete_user.user_blueprint)
+    app.register_blueprint(put_user.user_blueprint)
 
     db.init_app(app)
     Migrate(app, db)

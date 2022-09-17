@@ -16,7 +16,7 @@ def get_users():
 
         return make_response(
             get_message("CM0001I", name="ユーザーの取得"),
-            StatusCode.POST_SUCCESS,
+            StatusCode.SUCCCESS,
             {"users": [user.to_dict() for user in users]},
         )
 
