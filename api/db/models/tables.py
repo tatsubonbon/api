@@ -108,8 +108,6 @@ class User(db.Model):
 def verify_password(email_or_token, password):
     # トークンで認証
     user = User.verify_auth_token(email_or_token)
-    print(user)
-    print(email_or_token)
     if not user:
         # email/passwordで認証
         user = User.query.filter_by(email=email_or_token).first()

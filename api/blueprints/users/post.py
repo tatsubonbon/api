@@ -28,7 +28,6 @@ def create_user():
         user_name = payload.get("user_name")
         email = payload.get("email")
         password = payload.get("password")
-        print(user_name)
 
         user = User(user_name=user_name, email=email, role_id=1)
         user.hash_password(password)

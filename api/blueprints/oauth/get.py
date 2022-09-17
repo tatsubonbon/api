@@ -1,5 +1,6 @@
 from api.app import oauth
 from api.blueprints.oauth import oauth_blueprint
+from api.common.error import unauthorized
 from flask import g, jsonify
 
 
@@ -8,3 +9,8 @@ from flask import g, jsonify
 def get_auth_token():
     token = g.user.generate_auth_token(600)
     return jsonify({"token": token, "duration": 600})
+
+
+@oauth.error_handler
+def auth_error():
+    return unauthorized("Access Denied")
