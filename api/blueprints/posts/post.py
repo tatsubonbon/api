@@ -5,10 +5,11 @@ from pathlib import Path
 from api.app import db, ma, oauth
 from api.blueprints.posts import post_blueprint
 from api.common.message import get_message
+from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.models.image import Image
 from api.db.models.posts import Post
-from flask import current_app, jsonify, request
+from flask import current_app, request
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -26,9 +27,8 @@ def set_post():
         request_schema = RequestSchema()
         payload = request_schema.load(request.json)
     except Exception:
-        return (
-            jsonify({"message": get_message("CM0000I", name="test")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0000I", name="test"), StatusCode.ERROR
         )
 
     try:
@@ -57,13 +57,15 @@ def set_post():
                 db.session.add(image)
         db.session.commit()
 
-        return (
-            jsonify({"message": get_message("CM0001I", name="投稿")}),
+        return make_response(
+            get_message("CM0001I", name="投稿"),
             StatusCode.POST_SUCCESS,
+            {"post_id": post_id},
         )
+
     except IOError:
-        return jsonify({"message": get_message("CM0002E", name="投稿")}), StatusCode.ERROR
+        return make_error_response(get_message("CM0002E", name="投稿"), StatusCode.ERROR)
     except SQLAlchemyError:
-        return jsonify({"message": get_message("CM0002E", name="投稿")}), StatusCode.ERROR
+        return make_error_response(get_message("CM0002E", name="投稿"), StatusCode.ERROR)
     except Exception:
-        return jsonify({"message": get_message("CM0002E", name="投稿")}), StatusCode.ERROR
+        return make_error_response(get_message("CM0002E", name="投稿"), StatusCode.ERROR)

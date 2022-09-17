@@ -1,10 +1,9 @@
 from api.app import oauth
 from api.blueprints.users import user_blueprint
 from api.common.message import get_message
-from api.common.response import make_error_response
+from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.models.users import User
-from flask import jsonify
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -15,14 +14,15 @@ def get_users():
 
         users = User.query.all()
 
-        return (
-            jsonify({"users": [user.to_dict() for user in users]}),
-            StatusCode.SUCCCESS,
+        return make_response(
+            get_message("CM0001I", name="ユーザーの取得"),
+            StatusCode.POST_SUCCESS,
+            {"users": [user.to_dict() for user in users]},
         )
+
     except SQLAlchemyError:
-        return (
-            jsonify({"message": get_message("CM0002E", name="ユーザーの取得")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0002E", name="ユーザーの取得"), StatusCode.ERROR
         )
 
 
@@ -34,12 +34,15 @@ def get_user(user_id):
         user = User.query.filter_by(id=user_id).first()
 
         if user:
-            return jsonify({"user": user.to_dict()}), StatusCode.SUCCCESS
+            return make_response(
+                get_message("CM0001I", name="ユーザーの取得"),
+                StatusCode.POST_SUCCESS,
+                {"user": user.to_dict()},
+            )
         return make_error_response(
-            get_message("CM0006E", name="user"), StatusCode.NOT_FOUND_ERROR
+            get_message("CM0006E", name="ユーザー"), StatusCode.NOT_FOUND_ERROR
         )
     except SQLAlchemyError:
-        return (
-            jsonify({"message": get_message("CM0002E", name="ユーザーの取得")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0002E", name="ユーザーの取得"), StatusCode.ERROR
         )

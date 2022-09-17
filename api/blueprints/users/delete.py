@@ -1,9 +1,9 @@
 from api.app import db, oauth
 from api.blueprints.users import user_blueprint
 from api.common.message import get_message
+from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.models.users import User
-from flask import jsonify
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -16,12 +16,13 @@ def delete_user(user_id):
         db.session.delete(user)
         db.session.commit()
 
-        return (
-            jsonify({"message": get_message("CM0001I", name="ユーザーの削除")}),
+        return make_response(
+            get_message("CM0001I", name="ユーザーの削除"),
             StatusCode.SUCCCESS,
+            {"user_id": user_id},
         )
+
     except SQLAlchemyError:
-        return (
-            jsonify({"message": get_message("CM0002E", name="ユーザーの削除")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0002E", name="ユーザーの削除"), StatusCode.ERROR
         )

@@ -1,3 +1,5 @@
+from typing import Any
+
 from api.common.setting import StatusCode
 from flask import jsonify
 
@@ -6,7 +8,7 @@ RESULT = "result"
 STATUS_CODE = "code"
 
 
-def make_response(message: str, status_code: StatusCode, data):
+def make_response(message: str, status_code: StatusCode, data: Any):
     """
     クライアントにリスポンスを返却します。
 
@@ -16,7 +18,7 @@ def make_response(message: str, status_code: StatusCode, data):
         クライアントに表示するメッセージ。
     status_code : StatusCode
         HTTPステータスコード。
-    data : any
+    data : Any
         クライアントに返却するデータ。
 
     Returns

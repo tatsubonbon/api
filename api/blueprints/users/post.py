@@ -1,6 +1,7 @@
 from api.app import db, ma
 from api.blueprints.users import user_blueprint
 from api.common.message import get_message
+from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.models.users import User
 from flask import jsonify, request, url_for
@@ -19,12 +20,9 @@ def create_user():
     try:
         requestSchema = RequestSchema()
         payload = requestSchema.load(request.json)
-    except Exception as e:
-        print(e)
-
-        return (
-            jsonify({"message": get_message("CM0000I", name="test")}),
-            StatusCode.ERROR,
+    except Exception:
+        return make_error_response(
+            get_message("CM0000I", name="test"), StatusCode.ERROR
         )
 
     try:
@@ -37,20 +35,17 @@ def create_user():
         db.session.add(user)
         db.session.commit()
 
-        return (
-            jsonify({"user_name": user.user_name}),
+        return make_response(
+            get_message("CM0001I", name="ユーザー登録"),
             StatusCode.POST_SUCCESS,
-            {"Location": url_for("users.get_user", user_id=user.id, _external=True)},
+            {"user_name": user_name},
         )
     except IntegrityError:
         # メールアドレス重複登録
-        return (
-            jsonify({"message": get_message("CM0003I", name="そのemail")}),
-            StatusCode.DUPLICATION_ERROR,
+        return make_error_response(
+            get_message("CM0003I", name=email), StatusCode.DUPLICATION_ERROR
         )
-    except SQLAlchemyError as e:
-        print(e)
-        return (
-            jsonify({"message": get_message("CM0002E", name="ユーザー登録")}),
-            StatusCode.ERROR,
+    except SQLAlchemyError:
+        return make_error_response(
+            get_message("CM0002E", name="ユーザー登録"), StatusCode.ERROR
         )

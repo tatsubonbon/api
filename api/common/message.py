@@ -8,8 +8,6 @@ message_dict = {
     "CM0004I": "test",
     "CM0005I": "test",
     "CM0006E": "{name}が見つかりません。",
-    "CM0007I": "test",
-    "CM0008I": "test",
 }
 
 

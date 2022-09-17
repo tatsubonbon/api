@@ -3,12 +3,11 @@ from pathlib import Path
 from api.app import oauth
 from api.blueprints.posts import post_blueprint
 from api.common.message import get_message
-from api.common.response import make_response
+from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.columns.postsCol import PostColumns
 from api.db.models.image import Image, ImageSchema
 from api.db.models.posts import Post, PostSchema
-from flask import jsonify
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -31,17 +30,14 @@ def get_post(post_id):
             get_message("CM0006E", name="ユーザー"), StatusCode.SUCCCESS, data
         )
     except IOError:
-        return (
-            jsonify({"message": get_message("CM0002E", name="投稿の取得")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0002E", name="投稿の取得"), StatusCode.ERROR
         )
     except SQLAlchemyError:
-        return (
-            jsonify({"message": get_message("CM0002E", name="投稿の取得")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0002E", name="投稿の取得"), StatusCode.ERROR
         )
     except Exception:
-        return (
-            jsonify({"message": get_message("CM0002E", name="投稿の取得")}),
-            StatusCode.ERROR,
+        return make_error_response(
+            get_message("CM0002E", name="投稿の取得"), StatusCode.ERROR
         )
