@@ -94,7 +94,9 @@ class User(db.Model):
     def verify_auth_token(token):
         try:
             data = jwt.decode(
-                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+                token,
+                current_app.config["SECRET_KEY"],
+                algorithms=["HS256"],
             )
         except Exception:
             return
