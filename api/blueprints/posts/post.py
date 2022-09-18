@@ -3,7 +3,7 @@ import uuid
 from pathlib import Path
 
 from api.app import db, ma, oauth
-from api.blueprints.posts import post_blueprint
+from api.blueprints.posts import blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
@@ -19,7 +19,7 @@ class RequestSchema(ma.Schema):
     images = ma.String()
 
 
-@post_blueprint.route("/", methods=["POST"])
+@blueprint.route("/", methods=["POST"])
 @oauth.login_required
 def set_post():
     try:

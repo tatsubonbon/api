@@ -1,5 +1,5 @@
 from api.app import db, ma, oauth
-from api.blueprints.users import user_blueprint
+from api.blueprints.users import blueprint
 from api.common.error import forbidden
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
@@ -15,7 +15,7 @@ class RequestSchema(ma.Schema):
     email = ma.Email(required=True)
 
 
-@user_blueprint.route("/", methods=["PUT"])
+@blueprint.route("/", methods=["PUT"])
 @oauth.login_required
 def update_user():
     try:

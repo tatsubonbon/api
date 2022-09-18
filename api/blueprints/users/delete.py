@@ -1,5 +1,5 @@
 from api.app import db, oauth
-from api.blueprints.users import user_blueprint
+from api.blueprints.users import blueprint
 from api.common.error import forbidden
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
@@ -9,7 +9,7 @@ from flask import g
 from sqlalchemy.exc import SQLAlchemyError
 
 
-@user_blueprint.route("/<user_id>", methods=["DELETE"])
+@blueprint.route("/<user_id>", methods=["DELETE"])
 @oauth.login_required
 def delete_user(user_id):
     try:

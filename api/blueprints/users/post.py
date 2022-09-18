@@ -1,5 +1,5 @@
 from api.app import db, ma
-from api.blueprints.users import user_blueprint
+from api.blueprints.users import blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
@@ -14,7 +14,7 @@ class RequestSchema(ma.Schema):
     password = ma.String(required=True)
 
 
-@user_blueprint.route("/", methods=["POST"])
+@blueprint.route("/", methods=["POST"])
 def create_user():
     try:
         requestSchema = RequestSchema()

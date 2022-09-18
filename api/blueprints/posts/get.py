@@ -1,8 +1,5 @@
-from pathlib import Path
-from re import I
-
 from api.app import oauth
-from api.blueprints.posts import post_blueprint
+from api.blueprints.posts import blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
@@ -12,7 +9,7 @@ from api.db.models.tables import Image, Post
 from sqlalchemy.exc import SQLAlchemyError
 
 
-@post_blueprint.route("/<post_id>", methods=["GET"])
+@blueprint.route("/<post_id>", methods=["GET"])
 @oauth.login_required
 def get_post(post_id):
     try:

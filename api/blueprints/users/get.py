@@ -1,5 +1,5 @@
 from api.app import oauth
-from api.blueprints.users import user_blueprint
+from api.blueprints.users import blueprint
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
@@ -7,7 +7,7 @@ from api.db.models.tables import User
 from sqlalchemy.exc import SQLAlchemyError
 
 
-@user_blueprint.route("/", methods=["GET"])
+@blueprint.route("/", methods=["GET"])
 @oauth.login_required
 def get_users():
     try:
@@ -26,7 +26,7 @@ def get_users():
         )
 
 
-@user_blueprint.route("/<user_id>", methods=["GET"])
+@blueprint.route("/<user_id>", methods=["GET"])
 @oauth.login_required
 def get_user(user_id):
     try:
