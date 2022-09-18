@@ -34,7 +34,7 @@ def update_user():
         user = User.query.filter_by(id=id).first()
 
         if g.user != user:
-            forbidden("Insufficient permissions")
+            return forbidden(get_message("CM0004E"))
 
         user.user_name = user_name
         user.email = email

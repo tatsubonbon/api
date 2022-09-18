@@ -5,8 +5,8 @@ message_dict = {
     "CM0001I": "{name}に成功しました。",
     "CM0002E": "{name}に失敗しました。",
     "CM0003I": "{name}はすでに存在します。",
-    "CM0004I": "test",
-    "CM0005I": "test",
+    "CM0004E": "Insufficient permissions",
+    "CM0005E": "Access Denied",
     "CM0006E": "{name}が見つかりません。",
 }
 

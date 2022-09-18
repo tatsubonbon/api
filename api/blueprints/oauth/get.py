@@ -1,6 +1,7 @@
 from api.app import oauth
 from api.blueprints.oauth import oauth_blueprint
 from api.common.error import unauthorized
+from api.common.message import get_message
 from flask import g, jsonify
 
 
@@ -13,4 +14,4 @@ def get_auth_token():
 
 @oauth.error_handler
 def auth_error():
-    return unauthorized("Access Denied")
+    return unauthorized(get_message("CM0005E"))
