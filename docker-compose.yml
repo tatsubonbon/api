@@ -20,11 +20,7 @@ services:
     build: ./docker/mysql
     restart: always
     container_name: mysql-db
-    environment:
-      MYSQL_DATABSE: sample-db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+    env_file: .env-mysql
     volumes:
       - ./data/db:/docker-entrypoint-initdb.d
     ports:

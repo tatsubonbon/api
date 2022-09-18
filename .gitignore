@@ -255,3 +255,20 @@ cython_debug/
 
 # vscode
 settings.json
+
+# migrations
+migrations
+
+# sqlite
+local.sqlite
+testing.sqlite
+
+# images
+images
+
+# mac
+.DS_Store
+
+# env
+.env
+.env-mysql
