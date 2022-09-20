@@ -1,17 +1,22 @@
+import logging
+
 from api.app import oauth
 from api.blueprints.users import blueprint
+from api.common.decorator import logging_api
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
 from api.common.setting import StatusCode
 from api.db.models.tables import User
 from sqlalchemy.exc import SQLAlchemyError
 
+logger = logging.getLogger(__name__)
+
 
 @blueprint.route("/", methods=["GET"])
 @oauth.login_required
+@logging_api(logger)
 def get_users():
     try:
-
         users = User.query.all()
 
         return make_response(
@@ -30,7 +35,6 @@ def get_users():
 @oauth.login_required
 def get_user(user_id):
     try:
-
         user = User.query.filter_by(id=user_id).first()
 
         if user:

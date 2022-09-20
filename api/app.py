@@ -25,6 +25,7 @@ def create_app():
 
 def setup_app(app):
     from api import blueprints_list
+    from api.common.logging import init_log
 
     for module in blueprints_list:
         app.register_blueprint(module.blueprint)
@@ -32,3 +33,4 @@ def setup_app(app):
     db.init_app(app)
     Migrate(app, db)
     ma.init_app(app)
+    init_log()
