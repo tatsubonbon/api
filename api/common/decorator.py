@@ -15,15 +15,10 @@ def logging_api(logger: Logger):
 
             func_name = func.__name__
 
-            logger.info(f"[{func_name}開始")
-
             try:
+                logger.info(f"{func_name}開始")
                 # funcの実行
                 return func(*args, **kwargs)
-            except Exception as err:
-                # funcのエラーハンドリング
-                logger.error(err, exc_info=True)
-                logger.error(f"{func_name}異常が発生しました")
             finally:
                 logger.info(f"{func_name}終了")
 

@@ -25,7 +25,8 @@ def get_users():
             {"users": [user.to_dict() for user in users]},
         )
 
-    except SQLAlchemyError:
+    except SQLAlchemyError as e:
+        logger.error(e)
         return make_error_response(
             get_message("CM0002E", name="ユーザーの取得"), StatusCode.ERROR
         )
@@ -33,6 +34,7 @@ def get_users():
 
 @blueprint.route("/<user_id>", methods=["GET"])
 @oauth.login_required
+@logging_api(logger)
 def get_user(user_id):
     try:
         user = User.query.filter_by(id=user_id).first()
@@ -40,13 +42,14 @@ def get_user(user_id):
         if user:
             return make_response(
                 get_message("CM0001I", name="ユーザーの取得"),
-                StatusCode.POST_SUCCESS,
+                StatusCode.SUCCCESS,
                 {"user": user.to_dict()},
             )
         return make_error_response(
             get_message("CM0006E", name="ユーザー"), StatusCode.NOT_FOUND_ERROR
         )
-    except SQLAlchemyError:
+    except SQLAlchemyError as e:
+        logger.error(e)
         return make_error_response(
             get_message("CM0002E", name="ユーザーの取得"), StatusCode.ERROR
         )

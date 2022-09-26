@@ -1,5 +1,8 @@
+import logging
+
 from api.app import db, oauth
 from api.blueprints.users import blueprint
+from api.common.decorator import logging_api
 from api.common.error import forbidden
 from api.common.message import get_message
 from api.common.response import make_error_response, make_response
@@ -8,9 +11,12 @@ from api.db.models.tables import User
 from flask import g
 from sqlalchemy.exc import SQLAlchemyError
 
+logger = logging.getLogger(__name__)
+
 
 @blueprint.route("/<user_id>", methods=["DELETE"])
 @oauth.login_required
+@logging_api(logger)
 def delete_user(user_id):
     try:
         user = User.query.filter_by(id=user_id).first()
@@ -27,7 +33,8 @@ def delete_user(user_id):
             {"user_id": user_id},
         )
 
-    except SQLAlchemyError:
+    except SQLAlchemyError as e:
+        logger.error(e)
         return make_error_response(
             get_message("CM0002E", name="ユーザーの削除"), StatusCode.ERROR
         )
